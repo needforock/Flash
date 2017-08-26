@@ -1,4 +1,4 @@
-package ve.needforock.flash;
+package ve.needforock.flash.views.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,11 +9,14 @@ import com.firebase.ui.auth.ResultCodes;
 
 import java.util.Arrays;
 
+import ve.needforock.flash.R;
+import ve.needforock.flash.views.main.MainActivity;
+
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements LoginCallback {
 
     private static final int RC_SIGN_IN = 123;
 
@@ -24,16 +27,13 @@ public class LoginActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
 
-        if (new CurrentUser().getCurrentUser() != null) {
-            logged();
-        } else {
-            signUp();
-        }
-
+        new LoginPresenter(LoginActivity.this).verification();
 
     }
 
-    private void signUp() {
+
+    @Override
+    public void signUp() {
         startActivityForResult(
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
@@ -42,8 +42,16 @@ public class LoginActivity extends AppCompatActivity {
                                         new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build(),
                                         new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build()/*,
                                         new AuthUI.IdpConfig.Builder(AuthUI.TWITTER_PROVIDER).build()*/))
+                        .setTheme(R.style.LoginTheme)
+                        .setLogo(R.mipmap.logo)
                         .build(),
                 RC_SIGN_IN);
+    }
+    @Override
+    public void logged() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -57,11 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void logged() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
+
 
 
 }

@@ -1,4 +1,4 @@
-package ve.needforock.flash;
+package ve.needforock.flash.data;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -13,5 +13,8 @@ public class CurrentUser {
 
     public FirebaseUser getCurrentUser() {
         return currentUser;
+    }
+    public String userEmail(){
+        return getCurrentUser().getEmail();
     }
 }
