@@ -17,4 +17,11 @@ public class CurrentUser {
     public String userEmail(){
         return getCurrentUser().getEmail();
     }
+
+    public String getUid(){
+        return currentUser.getUid();
+    }
+    public String sanitizedEmail(String email){
+        return email.replace("@", "AT").replace(".","DOT");
+    }
 }
