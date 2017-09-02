@@ -21,7 +21,9 @@ public class PhotoValidation {
     public void validate() {
         String url = new PhotoPreference(context).getPhoto();
         if (url != null) {
+
             photoCallBack.photoAvailable(url);
+
         } else {
             photoCallBack.emptyPhoto();
         }
