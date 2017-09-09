@@ -10,6 +10,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import ve.needforock.flash.data.CurrentUser;
+import ve.needforock.flash.data.EmailProcessor;
 import ve.needforock.flash.data.Nodes;
 import ve.needforock.flash.data.PhotoPreference;
 import ve.needforock.flash.models.LocalUser;
@@ -28,7 +29,7 @@ public class UploadPhoto {
     public void toFirebase(String path){
         Log.d("upload", path);
         final CurrentUser currentUser = new CurrentUser();
-        String folder = currentUser.sanitizedEmail(currentUser.userEmail()+"/");
+        String folder = new EmailProcessor().sanitizedEmail(currentUser.userEmail()+"/");
         String photoName = "avatar.jpeg";
 
         String baseUrl = "gs://flash-8cf90.appspot.com/avatars/";
@@ -49,7 +50,7 @@ public class UploadPhoto {
                 user.setName(currentUser.getCurrentUser().getDisplayName());
                 user.setPhoto(url);
                 user.setUid(currentUser.getUid());
-                String key = currentUser.sanitizedEmail(currentUser.userEmail());
+                String key = new EmailProcessor().sanitizedEmail(currentUser.userEmail());
                 new Nodes().user(key).setValue(user);
             }
         });
