@@ -43,7 +43,7 @@ public class ChatsAdapter extends FirebaseRecyclerAdapter<Chat, ChatsAdapter.Cha
             @Override
             public void onClick(View view) {
                 Chat auxChat = getItem(viewHolder.getAdapterPosition());
-                chatListener.clicked(auxChat.getKey(), auxChat.getReceiver());
+                chatListener.clicked(auxChat);
             }
         });
 

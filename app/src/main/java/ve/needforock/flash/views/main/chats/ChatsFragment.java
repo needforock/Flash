@@ -11,9 +11,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import ve.needforock.flash.R;
+import ve.needforock.flash.models.Chat;
 import ve.needforock.flash.views.chat.ChatActivity;
 import ve.needforock.flash.views.main.chats.adapters.ChatListener;
 import ve.needforock.flash.views.main.chats.adapters.ChatsAdapter;
@@ -23,9 +23,10 @@ import ve.needforock.flash.views.main.chats.adapters.ChatsAdapter;
  */
 public class ChatsFragment extends Fragment implements ChatListener {
 
-    public static final String CHAT_KEY = "ve.needforock.flash.views.main.chats.KEY.CHAT_KEY" ;
-    public static final String CHAT_TITLE = "ve.needforock.flash.views.main.chats.KEY.CHAT_TITLE";
+
+    public static final String CHAT = "ve.needforock.flash.views.main.chats.KEY.CHAT";
     private RecyclerView recyclerView;
+    private ChatsAdapter chatsAdapter;
 
     public ChatsFragment() {
         // Required empty public constructor
@@ -49,18 +50,24 @@ public class ChatsFragment extends Fragment implements ChatListener {
         //recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), linearLayoutManager.VERTICAL));
 
-        ChatsAdapter chatsAdapter = new ChatsAdapter(this);
+        chatsAdapter = new ChatsAdapter(this);
         recyclerView.setAdapter(chatsAdapter);
 
     }
 
     @Override
-    public void clicked(String key, String title) {
-        Toast.makeText(getContext(), title, Toast.LENGTH_SHORT).show();
+    public void clicked(Chat chat) {
+
         Intent intent = new Intent(getContext(), ChatActivity.class);
-        intent.putExtra(CHAT_KEY, key);
-        intent.putExtra(CHAT_TITLE, title);
+
+        intent.putExtra(CHAT, chat);
         startActivity(intent);
 
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        chatsAdapter.cleanup();
     }
 }

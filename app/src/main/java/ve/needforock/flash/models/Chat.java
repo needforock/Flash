@@ -1,13 +1,33 @@
 package ve.needforock.flash.models;
 
+import java.io.Serializable;
+
 /**
  * Created by Soporte on 05-Sep-17.
  */
 
-public class Chat {
+public class Chat implements Serializable{
 
-    private String photo, receiver, key;
+    private String photo, receiver, key, uid;
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
     private boolean notification;
+    private long timestamp;
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
 
     public Chat() {
     }
